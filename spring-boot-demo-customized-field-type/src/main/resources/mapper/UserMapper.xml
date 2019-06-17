@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.anyesu.mapper.IUserMapper">
+    <select id="selectByPrimaryKey" resultType="com.github.anyesu.entity.User">
+        select * from user where id = #{arg0}
+    </select>
+
+    <select id="select" resultType="com.github.anyesu.entity.User">
+        select * from user
+        <where>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
+
+    <insert id="insert">
+        insert into user (name, sex) values (#{name}, #{sex})
+    </insert>
+
+    <insert id="insertSelective">
+        insert into user ( id
+        <trim>
+            <if test="name != null">
+                , name
+            </if>
+            <if test="sex != null">
+                , sex
+            </if>
+            <if test="detail != null">
+                , detail
+            </if>
+        </trim>
+        ) values( null
+        <trim>
+            <if test="name != null">
+                , #{name}
+            </if>
+            <if test="sex != null">
+                , #{sex}
+            </if>
+            <if test="detail != null">
+                , #{detail}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey">
+        update user
+        set name = #{name}, sex = #{sex}, detail = #{detail}
+        where id = #{id}
+    </update>
+
+    <update id="updateByPrimaryKeySelective">
+        update user
+        <set>
+            <if test="name != null">
+                , name = #{name}
+            </if>
+            <if test="sex != null">
+                , sex = #{sex}
+            </if>
+            <if test="detail != null">
+                , detail = #{detail}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        delete from user where id = #{arg0}
+    </delete>
+</mapper>

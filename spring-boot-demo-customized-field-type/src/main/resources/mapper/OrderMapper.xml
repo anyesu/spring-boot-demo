@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.anyesu.mapper.IOrderMapper">
+    <select id="selectByPrimaryKey" resultType="com.github.anyesu.entity.Order">
+        select * from `order` where id = #{arg0}
+    </select>
+
+    <select id="select" resultType="com.github.anyesu.entity.Order">
+        select * from `order`
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from `order`
+    </select>
+
+    <insert id="insert">
+        insert into `order` (orderNo, status, orderGoods) values (#{orderNo}, #{status}, #{orderGoods})
+    </insert>
+
+    <insert id="insertSelective">
+        insert into `order` ( id
+        <trim>
+            <if test="orderNo != null">
+                , orderNo
+            </if>
+            <if test="status != null">
+                , status
+            </if>
+            <if test="address != null">
+                , address
+            </if>
+            <if test="orderGoods != null">
+                , orderGoods
+            </if>
+        </trim>
+        ) values( null
+        <trim>
+            <if test="orderNo != null">
+                , #{orderNo}
+            </if>
+            <if test="status != null">
+                , #{status}
+            </if>
+            <if test="address != null">
+                , #{address}
+            </if>
+            <if test="orderGoods != null">
+                , #{orderGoods}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 特殊字段指定类型转换器 -->
+    <update id="updateByPrimaryKey">
+        update `order`
+        set orderNo = #{orderNo},
+            status = #{status},
+            address = #{address},
+            orderGoods = #{orderGoods, typeHandler=com.github.anyesu.common.typehandler.OrderGoodsListTypeHandler}
+        where id = #{id}
+    </update>
+
+    <update id="updateByPrimaryKeySelective">
+        update `order`
+        <set>
+            <if test="orderNo != null">
+                orderNo = #{orderNo},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <!-- 包裹在 set 标签内被正确识别为 List 类型 -->
+            <!-- 最好还是显式指定类型转换器 -->
+            <if test="orderGoods != null">
+                orderGoods = #{orderGoods}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        delete from `order` where id = #{arg0}
+    </delete>
+</mapper>

@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: org.h2.Driver
+    # 使用内置的数据库 h2
+    url: jdbc:h2:mem:public;MODE=MYSQL;DATABASE_TO_UPPER=false;INIT=CREATE SCHEMA IF NOT EXISTS public
+    initialize: true
+
+# Mybatis 配置
+mybatis:
+  # 使用实体类别名 BaseConfig.ENTITY_PACKAGE
+  type-aliases-package: com.github.anyesu.entity
+  # 用于类型转换
+  type-handlers-package: com.github.anyesu.common.typehandler
+  # mapper.xml 路径
+  mapper-locations: classpath:mapper/**/*.xml
