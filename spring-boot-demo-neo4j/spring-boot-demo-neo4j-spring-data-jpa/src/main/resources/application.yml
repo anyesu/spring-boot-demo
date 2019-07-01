@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    # 数据源配置
+    neo4j:
+      # 内置数据库持久化
+      #uri: file:///usr/.neo4j/graph.db
+      # 访问外部数据库
+      #uri: bolt://127.0.0.1:7687
+      #username: neo4j
+      #password: neo4j123456

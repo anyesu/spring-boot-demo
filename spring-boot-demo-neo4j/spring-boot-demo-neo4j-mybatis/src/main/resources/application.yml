@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: org.neo4j.jdbc.bolt.BoltDriver
+    url: jdbc:neo4j:bolt://127.0.0.1:7687
+    username: neo4j
+    password: neo4j123456
+
+# Mybatis 配置
+mybatis:
+  # 用于类型转换
+  type-handlers-package: com.github.anyesu.common.typehandler
+  # mapper.xml 路径
+  mapper-locations: classpath:mapper/**/*.xml

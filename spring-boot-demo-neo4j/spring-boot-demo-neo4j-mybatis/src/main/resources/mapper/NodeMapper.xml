@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.anyesu.mapper.INodeMapper">
+
+    <select id="findById" resultType="com.github.anyesu.entity.Neo4jModel">
+        MATCH (n)
+        WHERE ID(n) = #{id}
+        RETURN n
+    </select>
+
+    <select id="findByTypeAndId" resultType="com.github.anyesu.entity.Neo4jModel">
+        MATCH (n:${type})
+        WHERE ID(n) = #{id}
+        RETURN n
+    </select>
+
+    <select id="selectByType" resultType="com.github.anyesu.entity.Neo4jModel">
+        MATCH (n:${type})
+        RETURN n
+    </select>
+
+    <select id="insert" resultType="java.lang.Integer">
+        WITH #{data} AS data
+        CREATE (n:${type})
+        SET n = data
+        RETURN ID(n)
+    </select>
+
+    <select id="updateById" resultType="java.lang.Integer">
+        WITH #{data} AS data
+        MATCH (n)
+        WHERE ID(n) = #{id}
+        SET n = data
+        RETURN ID(n)
+    </select>
+
+    <select id="deleteById" resultType="java.lang.Integer">
+        MATCH (n)
+        WHERE ID(n) = #{id}
+        DELETE n
+        RETURN COUNT(n)
+    </select>
+
+</mapper>

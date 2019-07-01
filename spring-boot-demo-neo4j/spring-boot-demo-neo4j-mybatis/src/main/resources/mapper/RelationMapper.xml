@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.anyesu.mapper.IRelationMapper">
+
+    <select id="countByNodeId" resultType="java.lang.Integer">
+        MATCH (n)--(m)
+        WHERE ID(n) = #{nodeId}
+        RETURN COUNT(*)
+    </select>
+
+    <select id="selectNodeRelations" resultType="com.github.anyesu.entity.Neo4jModel">
+        MATCH (a:${src}) -[:${relation}]-> (b:${dest})
+        WHERE ID(a) = #{id}
+        RETURN DISTINCT b
+    </select>
+
+    <select id="insert" resultType="java.lang.Integer">
+        MATCH (a:${src}), (b:${dest})
+        WHERE ID(a) = #{srcId} AND ID(b) = #{destId}
+        CREATE (a)-[r:${relation}]->(b)
+        RETURN COUNT(r)
+    </select>
+
+    <select id="delete" resultType="java.lang.Integer">
+        MATCH (a:${src})-[r:${relation}]->(b:${dest})
+        WHERE ID(a) = #{srcId} AND ID(b) = #{destId}
+        DELETE r
+        RETURN COUNT(r)
+    </select>
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.anyesu.mapper.IPageMapper">
+
+    <select id="countByCondition" resultType="java.lang.Integer">
+        ${condition}
+        RETURN COUNT(*)
+    </select>
+
+    <select id="findPageByCondition" resultType="com.github.anyesu.entity.Neo4jModel">
+        ${condition}
+        RETURN ${return}
+        SKIP #{startRow} LIMIT #{pageSize}
+    </select>
+
+</mapper>
